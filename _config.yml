@@ -1,0 +1,8 @@
+excerpt_separator: ""
+pygments: true
+markdown: kramdown
+url: http://ahmed-masud.github.io
+title: Ahmed Masud
+tagline: A log of my open source projects
+description: Sharing thoughts, ideas and code.
+paginate: 5
