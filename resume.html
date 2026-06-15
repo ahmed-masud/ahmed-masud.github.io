@@ -308,13 +308,23 @@
     });
   });
 
-  /* Print: expand all sections */
+  /* Print: expand all sections + force high contrast theme */
+  var themeBeforePrint = null;
   window.addEventListener('beforeprint', function () {
+    themeBeforePrint = document.documentElement.getAttribute('data-theme');
+    document.documentElement.setAttribute('data-theme', 'access');
     document.querySelectorAll('.job-header').forEach(function (btn) {
       btn.setAttribute('aria-expanded', 'true');
       var body = document.getElementById(btn.getAttribute('aria-controls'));
       if (body) body.hidden = false;
     });
+  });
+
+  /* After print: restore previous theme */
+  window.addEventListener('afterprint', function () {
+    if (themeBeforePrint) {
+      document.documentElement.setAttribute('data-theme', themeBeforePrint);
+    }
   });
 })();
 </script>
