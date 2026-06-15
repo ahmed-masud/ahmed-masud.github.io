@@ -1,37 +1,491 @@
----
-layout: default
-title: Home
----
+<!DOCTYPE html>
+<html lang="en" data-theme="moody">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ahmed Masud — Enterprise Architect, AI Security Pioneer, Founder of saf.ai and Trustifier. Ottawa, ON.">
+  <meta name="author" content="Ahmed Masud">
+  <meta property="og:title" content="Ahmed Masud">
+  <meta property="og:description" content="I build things that defend themselves.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ahmed-masud.github.io">
+  <meta name="theme-color" content="#0F0D14">
+  <title>Ahmed Masud — Enterprise Architect & AI Security Pioneer</title>
+  <link rel="stylesheet" href="public/css/fonts.css">
+  <link rel="stylesheet" href="public/css/style.css">
+  <link rel="icon" type="image/x-icon" href="public/favicon.ico">
+</head>
+<body>
 
-<div class="posts">
-  {% for post in paginator.posts %}
-  <div class="post">
-    <h1 class="post-title">
-      <a href="{{ post.url }}">
-        {{ post.title }}
-      </a>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<div id="theme-announce" aria-live="polite" aria-atomic="true"></div>
+
+<!-- Theme switcher -->
+<div class="theme-bar" role="toolbar" aria-label="Theme selector">
+  <span class="theme-bar-label" id="theme-label">Theme:</span>
+  <button class="theme-btn"
+          aria-pressed="true"
+          data-theme-name="moody"
+          aria-describedby="theme-label">Moody</button>
+  <button class="theme-btn"
+          aria-pressed="false"
+          data-theme-name="dark"
+          aria-describedby="theme-label">Dark</button>
+  <button class="theme-btn"
+          aria-pressed="false"
+          data-theme-name="light"
+          aria-describedby="theme-label">Light</button>
+  <button class="theme-btn access-btn"
+          aria-pressed="false"
+          data-theme-name="access"
+          aria-describedby="theme-label">High Contrast</button>
+</div>
+
+<!-- Primary navigation -->
+<header role="banner">
+  <nav aria-label="Primary navigation">
+    <a class="nav-logo" href="#" aria-label="Ahmed Masud — home">Ahmed Masud</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#safai">saf.ai</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#patents">Patents</a></li>
+      <li><a href="#writing">Writing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+<main id="main-content">
+
+<!-- Hero -->
+<div class="hero" role="region" aria-labelledby="hero-heading">
+  <div class="hero-left">
+    <p class="hero-theorem"
+       aria-label="Mathematical axiom: for all data in the set D, data knows itself and defends itself">
+      ∀ data ∈ 𝔻 : data.knows(self) ∧ data.defends(self)
+    </p>
+    <h1 id="hero-heading">
+      I build things<br>
+      that <em>defend</em><br>
+      themselves.
     </h1>
-
-    <span class="post-date">{{ post.date | date_to_string }}</span>
-
-    {{ post.content }}
+    <p class="hero-sub">
+      Founder of saf.ai and Trustifier. Enterprise architect.
+      30+ years delivering mission-critical systems for DND, DoD, and NATO.
+      Holder of US&nbsp;Patent&nbsp;12,045,224.
+    </p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#safai">
+        saf.ai <span aria-hidden="true">→</span>
+        <span class="sr-only">(jump to saf.ai section)</span>
+      </a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
   </div>
-  {% endfor %}
+
+  <aside aria-label="Guiding axioms">
+    <div class="axioms">
+      <p class="axioms-heading" aria-hidden="true">Axioms</p>
+      <ol style="list-style:none">
+        <li class="axiom">
+          <span class="axiom-num" aria-hidden="true">§ 1</span>
+          <span class="axiom-text">
+            Security is a property of the data itself, not the perimeter around it.
+          </span>
+        </li>
+        <li class="axiom">
+          <span class="axiom-num" aria-hidden="true">§ 2</span>
+          <span class="axiom-text">
+            An architecture that cannot be explained cannot be trusted.
+          </span>
+        </li>
+        <li class="axiom">
+          <span class="axiom-num" aria-hidden="true">§ 3</span>
+          <span class="axiom-text">
+            The best defense makes the attacker's success impossible, not merely unlikely.
+          </span>
+        </li>
+      </ol>
+    </div>
+  </aside>
 </div>
 
-<div class="pagination">
-  {% if paginator.next_page %}
-    <a class="pagination-item older" href="/page{{paginator.next_page}}">Older</a>
-  {% else %}
-    <span class="pagination-item older">Older</span>
-  {% endif %}
-  {% if paginator.previous_page %}
-    {% if paginator.page == 2 %}
-      <a class="pagination-item newer" href="/">Newer</a>
-    {% else %}
-      <a class="pagination-item newer" href="/page{{paginator.previous_page}}">Newer</a>
-    {% endif %}
-  {% else %}
-    <span class="pagination-item newer">Newer</span>
-  {% endif %}
-</div>
+<hr class="rule" role="separator">
+
+<!-- About -->
+<section class="section" id="about" aria-labelledby="about-heading">
+  <div class="section-header">
+    <span class="section-num" aria-hidden="true">§ 01</span>
+    <h2 class="section-title" id="about-heading">About</h2>
+  </div>
+  <div class="about-body">
+    <div class="about-prose">
+      <p>
+        My career spans kernel-level Unix security in the 1990s, $100M+ DoD/DND program
+        delivery in SCIF environments, and now AI-native ransomware protection through
+        Cybernetic Engrams® — data blocks that transform into neural network weights capable
+        of self-verification and self-repair.
+      </p>
+      <p>
+        I operate at both ends of the stack: CISO-level executive who has advised DoD PEO
+        STRI and earned a CWID 2009 Blue Ribbon, and hands-on engineer who has written
+        production Rust, built custom Linux distributions, and designed a stealth CPU for
+        the US Navy.
+      </p>
+      <p>
+        I studied number theory under Dr. Bassam Nassrallah at the University of Ottawa —
+        mock-theta functions, q-hypergeometric series. That training in rigorous abstraction
+        still shapes how I think about systems.
+      </p>
+    </div>
+    <div class="about-stack" role="region" aria-label="Technical skills and clearances">
+      <p class="stack-label" id="arch-label">Architecture</p>
+      <ul class="stack-row" aria-labelledby="arch-label">
+        <li class="stack-tag">TOGAF</li>
+        <li class="stack-tag">SABSA</li>
+        <li class="stack-tag">NIST 800-53</li>
+        <li class="stack-tag">DND EA</li>
+        <li class="stack-tag">Zero-trust</li>
+      </ul>
+      <p class="stack-label" id="lang-label">Languages</p>
+      <ul class="stack-row" aria-labelledby="lang-label">
+        <li class="stack-tag">Rust</li>
+        <li class="stack-tag">Python</li>
+        <li class="stack-tag">C/C++</li>
+        <li class="stack-tag">TypeScript</li>
+        <li class="stack-tag">Java</li>
+      </ul>
+      <p class="stack-label" id="clear-label">Clearance</p>
+      <ul class="stack-row" aria-labelledby="clear-label">
+        <li class="stack-tag">Secret CA</li>
+        <li class="stack-tag">Secret US</li>
+        <li class="stack-tag">NATO</li>
+      </ul>
+      <ul class="stack-row" aria-label="Clearance status">
+        <li class="stack-tag">eligible · re-sponsorship</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="rule" role="separator">
+
+
+<!-- saf.ai -->
+<section class="section" id="safai" aria-labelledby="safai-heading">
+  <div class="section-header">
+    <span class="section-num" aria-hidden="true">§ 02</span>
+    <h2 class="section-title" id="safai-heading">saf.ai, Inc.</h2>
+  </div>
+  <div class="safai-hero" role="region" aria-label="Resiliate product overview">
+    <p class="safai-eyebrow">Resiliate · 2018 – present</p>
+    <h3>Data that knows<br>itself. Defends itself.</h3>
+    <p>
+      Built on US Patent 12,045,224 (Cybernetic Engrams®), Resiliate transforms each data
+      block into a neural network that can self-verify, self-heal, and roll back under
+      ransomware attack in under 100 milliseconds. Not detection. Prevention at the data layer.
+    </p>
+    <dl class="safai-metrics" aria-label="Key performance metrics">
+      <div class="metric">
+        <dt>Policy enforcement</dt>
+        <dd>&lt;100ms</dd>
+      </div>
+      <div class="metric">
+        <dt>Ransomware rollback</dt>
+        <dd>&lt;0.1s</dd>
+      </div>
+      <div class="metric">
+        <dt>HTTP req/hr · F5 Networks</dt>
+        <dd>~1B</dd>
+      </div>
+    </dl>
+    <p class="orch-label" id="orch-heading">Security orchestration layers</p>
+    <ul class="orch-list" aria-labelledby="orch-heading">
+      <li>SoDAC</li>
+      <li>SoDynTBAC</li>
+      <li>SoNFSv4ACL</li>
+      <li>SoBibaMIC</li>
+      <li>SoBLPMAC</li>
+    </ul>
+    <a class="safai-link-btn"
+       href="https://safai-labs.github.io"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Visit saf.ai labs on GitHub Pages (opens in new tab)">
+      Visit safai-labs.github.io <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+</section>
+
+<hr class="rule" role="separator">
+
+<!-- Work -->
+<section class="section" id="work" aria-labelledby="work-heading">
+  <div class="section-header">
+    <span class="section-num" aria-hidden="true">§ 03</span>
+    <h2 class="section-title" id="work-heading">Work</h2>
+  </div>
+  <ol class="work-timeline">
+    <li class="work-item">
+      <div class="work-years">
+        <time datetime="2005">2005</time> –<br>present
+      </div>
+      <div class="work-content">
+        <p class="work-role">CEO &amp; CTO</p>
+        <h3 class="work-company">Trustifier Inc.</h3>
+        <p class="work-desc">
+          Cybersecurity consultancy serving 100+ enterprise clients across government,
+          healthcare, and financial sectors. Built KSE, RYU, CloudFort, and Luminate.
+          CWID 2009 Blue Ribbon. SINET 2010 Innovator Award.
+        </p>
+      </div>
+    </li>
+    <li class="work-item">
+      <div class="work-years">
+        <time datetime="2008">2008</time> –
+        <time datetime="2018">2018</time>
+      </div>
+      <div class="work-content">
+        <p class="work-role">Senior Program Manager &amp; Architect</p>
+        <h3 class="work-company">DoD / DND Programs</h3>
+        <p class="work-desc">
+          Led $100M+ programs in SCIF environments. DND Enterprise Architecture
+          modernization. DoD PEO STRI advisory. Chief Designer, MKS Technologies /
+          US Navy experimental stealth CPU with hardware-level OTP encryption.
+        </p>
+      </div>
+    </li>
+    <li class="work-item">
+      <div class="work-years">
+        <time datetime="1998">1998</time> –
+        <time datetime="2007">2007</time>
+      </div>
+      <div class="work-content">
+        <p class="work-role">Founder &amp; Principal Engineer</p>
+        <h3 class="work-company">Googgun Technologies</h3>
+        <p class="work-desc">
+          Solved the Harry Potter Order of the Phoenix data leakage problem IBM couldn't
+          fix in 2.5 years — remotely, in 5 days. Cross-platform Oracle sync for NRC.
+          MaxTran DSL for continental GPS infrastructure. SnapLinux.
+        </p>
+      </div>
+    </li>
+    <li class="work-item">
+      <div class="work-years">
+        <time datetime="1994">1994</time> –
+        <time datetime="1997">1997</time>
+      </div>
+      <div class="work-content">
+        <p class="work-role">Founder &amp; CTO</p>
+        <h3 class="work-company">Remedium Security Systems</h3>
+        <p class="work-desc">
+          Founded cybersecurity startup; built Exorcist — the first kernel-level
+          Unix/Linux daemon monitoring and self-correction system.
+        </p>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<hr class="rule" role="separator">
+
+
+<!-- Patents & Recognition -->
+<section class="section" id="patents" aria-labelledby="patents-heading">
+  <div class="section-header">
+    <span class="section-num" aria-hidden="true">§ 04</span>
+    <h2 class="section-title" id="patents-heading">Patents &amp; Recognition</h2>
+  </div>
+  <article class="patent-card" aria-labelledby="patent-title">
+    <p class="patent-id">
+      US 12,045,224 · Issued 2024 · Also pending: CA 3,127,068 · EP 3915060
+    </p>
+    <h3 class="patent-title" id="patent-title">
+      Methods For Self-Aware, Self-Healing, And Self-Defending Data
+    </h3>
+    <p class="patent-desc">
+      Cybernetic Engrams® — a novel class of data structures that encode themselves as
+      neural network weights, enabling active self-verification, self-healing under
+      corruption, and self-defense against ransomware and tampering attacks.
+    </p>
+  </article>
+  <div class="awards-grid" role="list" aria-label="Awards and recognition">
+    <article class="award-card" role="listitem" aria-labelledby="award1-title">
+      <p class="award-year"><time datetime="2009">2009</time></p>
+      <h3 class="award-title" id="award1-title">CWID Blue Ribbon Winner</h3>
+      <p class="award-desc">
+        Coalition Warrior Interoperability Demonstration — DoD Red Team's first-ever
+        failed breach attempt in a cross-domain scenario.
+      </p>
+    </article>
+    <article class="award-card" role="listitem" aria-labelledby="award2-title">
+      <p class="award-year"><time datetime="2010">2010</time></p>
+      <h3 class="award-title" id="award2-title">SINET Innovator Award</h3>
+      <p class="award-desc">
+        Presented at the National Press Club, Washington DC,
+        alongside Invincea and FireEye.
+      </p>
+    </article>
+  </div>
+</section>
+
+<hr class="rule" role="separator">
+
+<!-- Writing -->
+<section class="section" id="writing" aria-labelledby="writing-heading">
+  <div class="section-header">
+    <span class="section-num" aria-hidden="true">§ 05</span>
+    <h2 class="section-title" id="writing-heading">Writing</h2>
+  </div>
+  <ol class="post-list" aria-label="Published articles">
+    <li class="post-item">
+      <span class="post-num" aria-hidden="true">001</span>
+      <a class="post-title"
+         href="_posts/2015-11-13-trustifier-user-expectation-trials-and-tribulations-of-ui-design.markdown">
+        Trustifier: user expectation — trials and tribulations of UI design
+      </a>
+      <time class="post-date" datetime="2015-11">Nov 2015</time>
+    </li>
+    <li class="post-item">
+      <span class="post-num" aria-hidden="true">002</span>
+      <span class="post-title"
+            aria-label="Coming soon: On AI-native security architectures">
+        On AI-native security architectures
+      </span>
+      <span class="post-date" aria-label="Coming soon">coming soon</span>
+    </li>
+  </ol>
+</section>
+
+<hr class="rule" role="separator">
+
+<!-- Contact -->
+<section class="section" id="contact" aria-labelledby="contact-heading">
+  <div class="section-header">
+    <span class="section-num" aria-hidden="true">§ 06</span>
+    <h2 class="section-title" id="contact-heading">Contact</h2>
+  </div>
+  <dl class="contact-body">
+    <div class="contact-group">
+      <dt class="contact-label">Email</dt>
+      <dd><a class="contact-val" href="mailto:googgun@gmail.com">googgun@gmail.com</a></dd>
+    </div>
+    <div class="contact-group">
+      <dt class="contact-label">LinkedIn</dt>
+      <dd>
+        <a class="contact-val"
+           href="https://linkedin.com/in/ahmedmasud"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="LinkedIn profile (opens in new tab)">
+          linkedin.com/in/ahmedmasud
+        </a>
+      </dd>
+    </div>
+    <div class="contact-group">
+      <dt class="contact-label">GitHub</dt>
+      <dd>
+        <a class="contact-val"
+           href="https://github.com/ahmed-masud"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="GitHub profile (opens in new tab)">
+          github.com/ahmed-masud
+        </a>
+      </dd>
+    </div>
+    <div class="contact-group">
+      <dt class="contact-label">saf.ai</dt>
+      <dd>
+        <a class="contact-val"
+           href="https://safai-labs.github.io"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="saf.ai labs website (opens in new tab)">
+          safai-labs.github.io
+        </a>
+      </dd>
+    </div>
+    <div class="contact-group">
+      <dt class="contact-label">Location</dt>
+      <dd><span class="contact-val">Ottawa, ON, Canada</span></dd>
+    </div>
+    <div class="contact-group">
+      <dt class="contact-label">Phone</dt>
+      <dd>
+        <a class="contact-val" href="tel:+16138796913">(613) 879-6913</a>
+      </dd>
+    </div>
+  </dl>
+</section>
+
+</main>
+
+
+<!-- Footer -->
+<footer role="contentinfo">
+  <p>© 2026 Ahmed Masud · Ottawa, ON</p>
+  <span class="footer-seq"
+        aria-label="Fibonacci sequence: 1, 1, 2, 3, 5, 8, 13, 21">
+    1, 1, 2, 3, 5, 8, 13, 21 ···
+  </span>
+  <a href="https://github.com/ahmed-masud/ahmed-masud.github.io"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="View source on GitHub (opens in new tab)">
+    source <span aria-hidden="true">↗</span>
+  </a>
+</footer>
+
+<script>
+(function () {
+  const root = document.documentElement;
+  const announce = document.getElementById('theme-announce');
+  const themeNames = {
+    moody:  'Moody',
+    dark:   'Dark',
+    light:  'Light',
+    access: 'High Contrast accessibility'
+  };
+
+  function setTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    document.querySelectorAll('.theme-btn').forEach(function (btn) {
+      btn.setAttribute('aria-pressed',
+        btn.dataset.themeName === theme ? 'true' : 'false');
+    });
+    if (announce) {
+      announce.textContent = themeNames[theme] + ' theme applied';
+      setTimeout(function () { announce.textContent = ''; }, 2000);
+    }
+    try { localStorage.setItem('am-theme', theme); } catch (e) {}
+  }
+
+  /* Wire up buttons */
+  document.querySelectorAll('.theme-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setTheme(btn.dataset.themeName);
+    });
+  });
+
+  /* Restore saved theme */
+  try {
+    var saved = localStorage.getItem('am-theme');
+    if (saved && themeNames[saved]) { setTheme(saved); }
+  } catch (e) {}
+
+  /* Respect OS preference if no saved choice */
+  try {
+    if (!localStorage.getItem('am-theme')) {
+      if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+        setTheme('light');
+      }
+    }
+  } catch (e) {}
+}());
+</script>
+
+</body>
+</html>
