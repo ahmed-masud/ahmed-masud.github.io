@@ -425,6 +425,8 @@ body {
     border-bottom: 0.75pt solid #000;
     margin-bottom: 0.6rem;
     padding-bottom: 0.2rem;
+    page-break-after: avoid;
+    break-after: avoid;
   }
 
   .job-header { padding: 0.5rem 0; }
@@ -460,9 +462,10 @@ body {
   }
 
   /* Avoid page breaks inside jobs */
-  .job { page-break-inside: avoid; }
-  .patent-entry { page-break-inside: avoid; }
-  .award-entry { page-break-inside: avoid; }
+  .job { page-break-inside: avoid; break-inside: avoid; }
+  .resume-section { page-break-inside: avoid; break-inside: avoid; }
+  .patent-entry { page-break-inside: avoid; break-inside: avoid; }
+  .award-entry { page-break-inside: avoid; break-inside: avoid; }
 
   a { color: #000; text-decoration: none; }
   a[href]::after { content: none; }
