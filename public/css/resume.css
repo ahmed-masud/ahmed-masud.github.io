@@ -179,15 +179,15 @@ body {
 
 .job-header {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
   align-items: center;
   padding: 1rem 0;
   background: transparent;
   border: none;
   cursor: pointer;
   text-align: left;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 .job-header:hover .job-company { color: var(--accent); }
 
