@@ -485,6 +485,15 @@
       }
     }
   } catch (e) {}
+
+  /* Print from anywhere — redirect to CV, return after */
+  window.addEventListener('beforeprint', function () {
+    if (window.location.pathname !== '/resume.html') {
+      try { localStorage.setItem('am-print-return', window.location.href); } catch (e) {}
+      window.location.href = '/resume.html?print=1';
+    }
+  });
+
 }());
 </script>
 

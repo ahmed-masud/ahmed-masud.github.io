@@ -308,6 +308,26 @@
     });
   });
 
+  /* Auto-print if redirected from another page */
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('print') === '1') {
+      window.addEventListener('load', function () {
+        setTimeout(function () {
+          window.print();
+          /* After print dialog closes, return to origin */
+          window.addEventListener('afterprint', function () {
+            try {
+              var returnUrl = localStorage.getItem('am-print-return');
+              localStorage.removeItem('am-print-return');
+              if (returnUrl) { window.location.href = returnUrl; }
+            } catch (e) {}
+          });
+        }, 400);
+      });
+    }
+  }());
+
   /* Print: expand all sections + force high contrast theme */
   var themeBeforePrint = null;
   window.addEventListener('beforeprint', function () {
