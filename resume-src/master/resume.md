@@ -137,7 +137,8 @@ skills:
   Languages: "Rust · Python · TypeScript · JavaScript (Node.js) · C/C++ · Java (J2EE – IBM Java 9) · PHP (3/4/5/6) · SQL/PL-SQL · Go (actively learning)"
   "Cloud & Infra": "Azure · AWS · Kubernetes/AKS · CSI drivers · Docker · Linux/Unix · High-availability systems"
   Integration: "REST/GraphQL/SOAP/XML/JSON · SOA · Microservices · Apache Camel 4.x · EIP patterns · HTTP/HTTPS proxy · WebSphere · gRPC · WebSockets"
-  "Data & AI": "Oracle 7–12c · PostgreSQL · Oracle↔MSSQL sync · LLM integration · Agentic workflows · Neural network architectures · Prometheus · Grafana · Splunk · GitHub Copilot"
+  "Graph & AI": "Neo4j (Trustifier + Resiliate, ~2 yrs) · Graph databases · Multigraphs · GraphRAG pipelines · Abstract algebra foundations of graph models · LangChain / LangGraph · Vector databases · Embeddings · LLM integration · Agentic workflows · Neural network architectures · Databricks · GitHub Copilot"
+  "Data": "Oracle 7–12c · PostgreSQL · Oracle↔MSSQL sync · Prometheus · Grafana · Splunk"
   Embedded: "FreeRTOS · Cortex-M · TI DSP · UART/SPI/I2C · Hardware OTP encryption · Kernel-level Unix/Linux security"
 
 # ── Patents ───────────────────────────────────────────────────────
