@@ -14,6 +14,49 @@
   <link rel="stylesheet" href="public/css/fonts.css">
   <link rel="stylesheet" href="public/css/style.css">
   <link rel="icon" type="image/x-icon" href="public/favicon.ico">
+  <style>
+    /* ── Term tooltips ───────────────────────────────────────────── */
+    .stack-tag.term {
+      cursor: help;
+      text-decoration: underline dotted;
+      text-decoration-color: var(--mid);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.15s;
+    }
+    .stack-tag.term:hover, .stack-tag.term.pinned {
+      text-decoration-color: var(--accent);
+    }
+    #term-tooltip {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      max-width: 300px;
+      background: var(--bg2);
+      border: 1px solid var(--accent);
+      border-radius: 3px;
+      padding: 0.55rem 0.75rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      pointer-events: none;
+    }
+    #term-tooltip b {
+      display: block;
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+    }
+    #term-tooltip p {
+      font-family: var(--sans);
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--mid);
+      margin: 0;
+    }
+    #term-tooltip.visible { display: block; }
+    @media print { #term-tooltip { display: none !important; } }
+  </style>
 </head>
 <body>
 
@@ -450,6 +493,67 @@
     source <span aria-hidden="true">↗</span>
   </a>
 </footer>
+
+<div id="term-tooltip" role="tooltip" aria-live="polite"></div>
+
+<script>
+/* ── Skill tag tooltips ───────────────────────────────────────────────────── */
+(function () {
+  var DEFS = {
+    'TOGAF':       'The Open Group Architecture Framework — structured methodology for aligning IT strategy with business goals across an enterprise.',
+    'SABSA':       'Sherwood Applied Business Security Architecture — risk-driven security architecture framework designed to layer over TOGAF.',
+    'NIST 800-53': 'NIST Special Publication 800-53 — US federal security control catalogue covering 20 control families for government systems at Moderate and High impact levels.',
+    'DND EA':      'Department of National Defence Enterprise Architecture — Canadian federal defence IT architecture standards applied across DoD and DND programs.',
+    'Zero-trust':  'Security model that eliminates implicit network trust — every user, device, and service must authenticate and be explicitly authorised for every access, regardless of where they are on the network.',
+    'Neo4j':       'Leading property-graph database using the Cypher query language. Used in Trustifier for identity relationship graphs and in Resiliate for policy dependency tracking (~2 years production use).',
+    'Graph DBs':   'Databases that store data as nodes and directed edges rather than tables, naturally modelling relationships and multi-hop traversal paths. Used in identity, policy, and knowledge graph workloads.',
+    'GraphRAG':    'Retrieval-Augmented Generation over a knowledge graph rather than a flat vector index. Enables multi-hop reasoning across named entity relationships, outperforming pure vector search for structured queries.',
+    'LangChain':   'Python framework for composing LLM-powered applications — tool-use, retrieval chains, prompt management, and agent orchestration. LangGraph extends it with stateful multi-agent workflows.',
+    'Vector DBs':  'Databases optimised for storing and querying high-dimensional embedding vectors, enabling semantic similarity search at scale. Examples: Pinecone, Weaviate, pgvector.',
+    'Embeddings':  'Dense numerical vector representations of text or data produced by neural encoder models. Semantically similar inputs cluster in vector space, enabling search by meaning. Distinct from embedded computing (bare-metal/RTOS — a separate skill area).',
+    'Databricks':  'Unified analytics platform built on Apache Spark. Supports large-scale data engineering, ML training pipelines, and LLM fine-tuning workflows.',
+    'Secret CA':   'Canadian federal Secret security clearance — authorises access to classified national security information up to the Secret level.',
+    'Secret US':   'US federal Secret security clearance — authorises access to information whose disclosure could cause serious damage to national security.',
+    'NATO':        'NATO Secret clearance — authorises access to classified NATO information. All three clearances (CA, US, NATO) are expired; eligible for re-sponsorship.',
+  };
+
+  var tip    = document.getElementById('term-tooltip');
+  var pinned = null;
+
+  function place(x, y) {
+    var w = tip.offsetWidth, h = tip.offsetHeight;
+    var left = x + 16, top = y + 16;
+    if (left + w > window.innerWidth  - 8) left = x - w - 8;
+    if (top  + h > window.innerHeight - 8) top  = y - h - 8;
+    tip.style.left = left + 'px';
+    tip.style.top  = top  + 'px';
+  }
+  function show(el, x, y) {
+    tip.innerHTML = '<b>' + el.textContent.trim() + '</b><p>' + el.dataset.def + '</p>';
+    tip.classList.add('visible');
+    place(x, y);
+  }
+  function hide() { tip.classList.remove('visible'); }
+
+  document.querySelectorAll('.stack-tag').forEach(function (el) {
+    var def = DEFS[el.textContent.trim()];
+    if (!def) return;
+    el.dataset.def = def;
+    el.classList.add('term');
+    el.addEventListener('mouseenter', function (e) { if (pinned !== el) show(el, e.clientX, e.clientY); });
+    el.addEventListener('mousemove',  function (e) { if (pinned !== el) place(e.clientX, e.clientY); });
+    el.addEventListener('mouseleave', function ()  { if (pinned !== el) hide(); });
+    el.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (pinned === el) { pinned = null; el.classList.remove('pinned'); hide(); }
+      else { if (pinned) pinned.classList.remove('pinned'); pinned = el; el.classList.add('pinned'); show(el, e.clientX, e.clientY); }
+    });
+  });
+
+  document.addEventListener('click',   function ()  { if (pinned) { pinned.classList.remove('pinned'); pinned = null; } hide(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && pinned) { pinned.classList.remove('pinned'); pinned = null; hide(); } });
+}());
+</script>
 
 <script>
 (function () {
