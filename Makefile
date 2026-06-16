@@ -1,17 +1,23 @@
 PY  = python3
 SRC = resume-src/build.py
 
-.PHONY: help new render render-all list status export
+.PHONY: help new tailor render render-all list status export
 
 help:
 	@echo "Resume builder commands:"
 	@echo ""
-	@echo "  make new COMPANY=Acme ROLE='Engineering Manager' [DATE=2026-06-16] [SOURCE=LinkedIn] [URL=https://...]"
+	@echo "  make new    COMPANY=Acme ROLE='Engineering Manager' [DATE=2026-06-16] [SOURCE=LinkedIn] [URL=https://...]"
+	@echo "  make tailor COMPANY=Acme ROLE='Engineering Manager' JD=path/to/jd.txt [MODEL=llama3.2] [DATE=...] [RENDER=1]"
 	@echo "  make render JOB=ACME_2026-06-16"
 	@echo "  make render-all"
 	@echo "  make list"
 	@echo "  make status JOB=ACME_2026-06-16 STATUS=interview"
 	@echo "  make export"
+	@echo ""
+	@echo "LLM tailoring requires Ollama (https://ollama.ai) running locally."
+	@echo "Recommended models: ollama pull mistral   (4.4 GB, best results)"
+	@echo "                    ollama pull llama3.2  (2 GB, good results)"
+	@echo "Available models:   ollama list"
 	@echo ""
 
 new:
@@ -21,6 +27,15 @@ new:
 	  $(if $(DATE),    --date   "$(DATE)") \
 	  $(if $(SOURCE),  --source "$(SOURCE)") \
 	  $(if $(URL),     --url    "$(URL)")
+
+tailor:
+	@$(PY) $(SRC) tailor \
+	  --company "$(COMPANY)" \
+	  --role    "$(ROLE)" \
+	  --jd      "$(JD)" \
+	  $(if $(MODEL),  --model "$(MODEL)") \
+	  $(if $(DATE),   --date  "$(DATE)") \
+	  $(if $(RENDER), --render)
 
 render:
 	@$(PY) $(SRC) render $(JOB)

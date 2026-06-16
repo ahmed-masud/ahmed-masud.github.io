@@ -43,6 +43,23 @@ Each company-specific application lives in `resume/<company>/` and typically con
 
 These pages load both `style.css` (for the theme switcher UI) and `resume.css` (for resume layout), and include `meta name="robots" content="noindex, nofollow"`.
 
+## LLM Tailoring (`feature/llm-tailoring` branch)
+
+`build.py tailor` uses a local Ollama model to auto-generate a tailored resume + cover letter from a job description file. Requires Ollama running locally with `mistral` or `llama3.2` (minimum 7B model — `tinyllama` is too small for structured JSON output).
+
+```bash
+# Pull a capable model first (one-time)
+ollama pull mistral
+
+# Generate tailored application
+make tailor COMPANY="Acme" ROLE="VP Engineering" JD=path/to/jd.txt
+
+# Review/edit the generated job file, then render
+make render JOB=ACME_2026-06-16
+```
+
+The LLM reads `resume-src/master/resume.md` and the JD, then outputs a fully populated `resume-src/jobs/COMPANY_DATE.md` with tailored summary, experience ordering, skills section, and cover letter paragraphs. Always review before rendering.
+
 ## Accessibility Conventions
 
 - All interactive elements must have visible `focus-visible` rings

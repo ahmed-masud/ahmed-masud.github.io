@@ -4,3 +4,4 @@ markdown>=3.5
 python-frontmatter>=1.1
 click>=8.1
 rich>=13.0
+requests>=2.31
