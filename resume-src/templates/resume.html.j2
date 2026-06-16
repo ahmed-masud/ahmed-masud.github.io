@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="access">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ name }} — {{ role }}. Tailored application for {{ company }}.">
+  <meta name="author" content="{{ name }}">
+  <meta name="robots" content="noindex, nofollow">
+  <title>{{ name }} — {{ role }} · {{ company }}</title>
+  <link rel="stylesheet" href="{{ css_root }}/fonts.css">
+  <link rel="stylesheet" href="{{ css_root }}/style.css">
+  <link rel="stylesheet" href="{{ css_root }}/resume.css">
+  <link rel="icon" type="image/x-icon" href="{{ icon_root }}/favicon.ico">
+  <style>
+    .tailored-banner {
+      background: var(--fg);
+      color: var(--bg);
+      text-align: center;
+      padding: 0.5rem 1rem;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .tailored-banner a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      margin-left: 1.5rem;
+    }
+    .tailored-banner a:hover { color: #fff; }
+    @media print { .tailored-banner { display: none; } }
+  </style>
+</head>
+<body>
+
+<div id="theme-announce" aria-live="polite" aria-atomic="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);"></div>
+
+<div class="theme-bar" role="toolbar" aria-label="Theme selector">
+  <span class="theme-bar-label" id="theme-label">Theme:</span>
+  <button class="theme-btn" aria-pressed="false" data-theme-name="moody" aria-describedby="theme-label">Moody</button>
+  <button class="theme-btn" aria-pressed="false" data-theme-name="dark" aria-describedby="theme-label">Dark</button>
+  <button class="theme-btn" aria-pressed="false" data-theme-name="light" aria-describedby="theme-label">Light</button>
+  <button class="theme-btn access-btn" aria-pressed="true" data-theme-name="access" aria-describedby="theme-label">High Contrast</button>
+</div>
+
+<div class="tailored-banner">
+  Prepared for {{ company }} — {{ role }} · {{ date_display }}
+  <a href="../../resume.html">← Master resume</a>
+</div>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header role="banner" class="resume-header">
+  <div class="resume-header-inner">
+    <div class="resume-header-left">
+      <h1>{{ name }}</h1>
+      <p class="resume-title">{{ title }}</p>
+      <p class="resume-location">{{ location }}</p>
+    </div>
+    <div class="resume-header-right">
+      <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+      <a href="tel:+1{{ contact.phone | replace('(','') | replace(')','') | replace(' ','') | replace('-','') }}">{{ contact.phone }}</a>
+      <a href="https://{{ contact.linkedin }}" target="_blank" rel="noopener noreferrer">{{ contact.linkedin }}</a>
+      <a href="https://{{ contact.website }}" target="_blank" rel="noopener noreferrer">{{ contact.website }}</a>
+    </div>
+  </div>
+  <nav class="resume-nav" aria-label="Resume navigation">
+    <a href="../../resume.html">← Master resume</a>
+    <button class="print-btn" onclick="window.print()" aria-label="Print or save as PDF">Print / Save PDF</button>
+  </nav>
+</header>
+
+<main id="main-content" class="resume-main">
+
+{% for section in sections %}
+{% if not loop.first %}
+  <hr class="resume-rule">
+{% endif %}
+
+{# ── Summary ── #}
+{% if section == 'summary' %}
+  <section class="resume-section" aria-labelledby="summary-heading">
+    <h2 id="summary-heading" class="section-title">Summary</h2>
+    <p class="summary-text">{{ summary | tokens }}</p>
+    {% if highlights %}
+    <div class="summary-highlights" role="list" aria-label="Key highlights">
+      {% for h in highlights %}
+      <span role="listitem" class="highlight">{{ h }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </section>
+
+{# ── Skills ── #}
+{% elif section == 'skills' %}
+  <section class="resume-section" aria-labelledby="skills-heading">
+    <h2 id="skills-heading" class="section-title">Technical Skills</h2>
+    <div class="skills-grid">
+      {% for label, items in skills.items() %}
+      <div class="skill-row">
+        <dt>{{ label }}</dt>
+        <dd>{{ items }}</dd>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+{# ── Experience ── #}
+{% elif section == 'experience' %}
+  <section class="resume-section" aria-labelledby="experience-heading">
+    <h2 id="experience-heading" class="section-title">Experience</h2>
+    {% for job in experience %}
+    {% set exp_id = "job-" ~ job.id %}
+    {% set is_open = loop.index <= expand_first_n %}
+    <div class="job">
+      <button class="job-header" aria-expanded="{{ 'true' if is_open else 'false' }}" aria-controls="{{ exp_id }}">
+        <div class="job-meta">
+          <span class="job-role">{{ job.title }}</span>
+          <span class="job-company">{{ job.company }}</span>
+        </div>
+        <span class="job-dates">{{ job.dates }}</span>
+      </button>
+      <div class="job-body" id="{{ exp_id }}"{% if not is_open %} hidden{% endif %}>
+        {% if job.desc %}<p class="job-desc">{{ job.desc | tokens }}</p>{% endif %}
+        {% if job.bullets %}
+        <ul class="job-bullets">
+          {% for bullet in job.bullets %}
+          <li>{{ bullet | md_inline | safe }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+
+{# ── Patents & Recognition ── #}
+{% elif section == 'patents' %}
+  <section class="resume-section" aria-labelledby="patents-heading">
+    <h2 id="patents-heading" class="section-title">Patents &amp; Recognition</h2>
+    {% for p in patents %}
+    <div class="patent-entry">
+      <p class="patent-id">US Patent {{ p.number }} · Issued {{ p.issued }} · Assignee: {{ p.assignee }}</p>
+      <p class="patent-title">{{ p.title }}</p>
+      <p class="patent-desc">{{ p.desc | tokens }}</p>
+    </div>
+    {% endfor %}
+    {% if awards %}
+    <div class="awards-list" role="list">
+      {% for a in awards %}
+      <div class="award-entry" role="listitem">
+        <span class="award-year">{{ a.year }}</span>
+        <div><strong>{{ a.title }}</strong> — {{ a.detail }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </section>
+
+{# ── Education ── #}
+{% elif section == 'education' %}
+  <section class="resume-section" aria-labelledby="education-heading">
+    <h2 id="education-heading" class="section-title">Education &amp; Certifications</h2>
+    <div class="edu-list">
+      {% for e in education %}
+      <div class="edu-entry">
+        <span class="edu-degree">{{ e.degree }}</span>
+        <span class="edu-school">{{ e.school }}</span>
+        <span class="edu-dates">{{ e.dates }}</span>
+        {% if e.note %}<span class="edu-note">{{ e.note }}</span>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% if certifications %}
+    <div class="cert-list">
+      <p class="cert-label">Certifications</p>
+      <p class="cert-items">
+        {%- for cert in certifications -%}
+          {{ cert }}{% if not loop.last %} &nbsp;·&nbsp; {% endif %}
+        {%- endfor -%}
+      </p>
+    </div>
+    {% endif %}
+  </section>
+
+{# ── Security Clearances ── #}
+{% elif section == 'clearances' %}
+  <section class="resume-section clearance-section" aria-labelledby="clearance-heading">
+    <h2 id="clearance-heading" class="section-title">Security Clearance</h2>
+    <p>{{ clearances | tokens }}</p>
+  </section>
+
+{% endif %}
+{% endfor %}
+
+</main>
+
+<footer role="contentinfo" class="resume-footer">
+  <p>{{ name }} · Ottawa, ON · <a href="mailto:{{ contact.email }}">{{ contact.email }}</a> · {{ contact.phone }}</p>
+  <p><a href="https://{{ contact.website }}">{{ contact.website }}</a> · Prepared for {{ company }} · {{ date_display }}</p>
+</footer>
+
+<script>
+(function () {
+  document.querySelectorAll('.job-header').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      var body = document.getElementById(btn.getAttribute('aria-controls'));
+      btn.setAttribute('aria-expanded', !expanded);
+      if (expanded) { body.hidden = true; } else { body.hidden = false; }
+    });
+  });
+  window.addEventListener('beforeprint', function () {
+    document.querySelectorAll('.job-header').forEach(function (btn) {
+      btn.setAttribute('aria-expanded', 'true');
+      var body = document.getElementById(btn.getAttribute('aria-controls'));
+      if (body) body.hidden = false;
+    });
+  });
+})();
+</script>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var announce = document.getElementById("theme-announce");
+  var themeNames = { moody:"Moody", dark:"Dark", light:"Light", access:"High Contrast accessibility" };
+  function setTheme(theme) {
+    root.setAttribute("data-theme", theme);
+    document.querySelectorAll(".theme-btn").forEach(function (btn) {
+      btn.setAttribute("aria-pressed", btn.dataset.themeName === theme ? "true" : "false");
+    });
+    if (announce) {
+      announce.textContent = themeNames[theme] + " theme applied";
+      setTimeout(function () { announce.textContent = ""; }, 2000);
+    }
+    try { localStorage.setItem("am-theme", theme); } catch (e) {}
+  }
+  document.querySelectorAll(".theme-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () { setTheme(btn.dataset.themeName); });
+  });
+  try {
+    var saved = localStorage.getItem("am-theme");
+    if (saved && themeNames[saved]) { setTheme(saved); return; }
+  } catch (e) {}
+  try {
+    if (window.matchMedia("(prefers-color-scheme: light)").matches) { setTheme("light"); }
+  } catch (e) {}
+}());
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+# Short token codes used as :token: in markdown source files.
+# Expand to Unicode or labelled text in rendered output.
+
+icons:
+  # Professional / resume
+  shield:      "🛡"
+  patent:      "⎄"
+  award:       "★"
+  tech:        "⌘"
+  cloud:       "☁"
+  clearance:   "⊛"
+  lead:        "◉"
+  arch:        "⬡"
+  ai:          "◈"
+  check:       "✓"
+  star:        "★"
+  briefcase:   "💼"
+  link:        "→"
+  arrow:       "→"
+  note:        "◆"
+  highlight:   "◈"
+
+  # Language shorthands
+  rust:        "Rs"
+  python:      "Py"
+  go:          "Go"
+  php:         "PHP"
+  js:          "JS"
+  ts:          "TS"
+
+# Application status tokens — expand to "icon Label"
+status:
+  draft:       {icon: "✏",  label: "Draft"}
+  applied:     {icon: "📤", label: "Applied"}
+  interview:   {icon: "🎤", label: "Interview"}
+  phone:       {icon: "📞", label: "Phone Screen"}
+  technical:   {icon: "💻", label: "Technical"}
+  offer:       {icon: "🎉", label: "Offer"}
+  accepted:    {icon: "✅", label: "Accepted"}
+  rejected:    {icon: "✗",  label: "Rejected"}
+  withdrawn:   {icon: "↩",  label: "Withdrawn"}
+  hold:        {icon: "⏸",  label: "On Hold"}
+  ghosted:     {icon: "👻", label: "Ghosted"}

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="access">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ahmed Masud — Application for Software Engineering Manager, E-Commerce at DocuPet.">
+  <meta name="author" content="Ahmed Masud">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Ahmed Masud — Software Engineering Manager, E-Commerce · DocuPet</title>
+  <link rel="stylesheet" href="../../public/css/fonts.css">
+  <link rel="stylesheet" href="../../public/css/style.css">
+  <link rel="stylesheet" href="../../public/css/resume.css">
+  <link rel="icon" type="image/x-icon" href="../../public/favicon.ico">
+  <style>
+    .tailored-banner {
+      background: var(--fg);
+      color: var(--bg);
+      text-align: center;
+      padding: 0.5rem 1rem;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .tailored-banner a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      margin-left: 1.5rem;
+    }
+    .tailored-banner a:hover { color: #fff; }
+    @media print { .tailored-banner { display: none; } }
+
+    .app-landing {
+      max-width: var(--max-w);
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+    .app-landing h2 {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--fg);
+      margin-bottom: 0.4rem;
+    }
+    .app-meta {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--faint);
+      margin-bottom: 2rem;
+    }
+    .app-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .app-link {
+      display: inline-block;
+      padding: 0.7rem 1.4rem;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: var(--mono);
+      font-size: 12px;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: opacity 0.15s;
+    }
+    .app-link:hover { opacity: 0.85; }
+    .app-link.secondary {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+    .app-status {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--mid);
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<div id="theme-announce" aria-live="polite" aria-atomic="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);"></div>
+
+<div class="theme-bar" role="toolbar" aria-label="Theme selector">
+  <span class="theme-bar-label" id="theme-label">Theme:</span>
+  <button class="theme-btn" aria-pressed="false" data-theme-name="moody" aria-describedby="theme-label">Moody</button>
+  <button class="theme-btn" aria-pressed="false" data-theme-name="dark" aria-describedby="theme-label">Dark</button>
+  <button class="theme-btn" aria-pressed="false" data-theme-name="light" aria-describedby="theme-label">Light</button>
+  <button class="theme-btn access-btn" aria-pressed="true" data-theme-name="access" aria-describedby="theme-label">High Contrast</button>
+</div>
+
+<div class="tailored-banner">
+  Application — DocuPet · 16 June 2026
+  <a href="../../resume.html">← Master resume</a>
+</div>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header role="banner" class="resume-header">
+  <div class="resume-header-inner">
+    <div class="resume-header-left">
+      <h1>Ahmed Masud</h1>
+      <p class="resume-title">Engineering Manager · AI-First Builder · Founder</p>
+      <p class="resume-location">Ottawa, ON, Canada · Remote</p>
+    </div>
+    <div class="resume-header-right">
+      <a href="mailto:ahmed.masud@linux.com">ahmed.masud@linux.com</a>
+      <a href="https://linkedin.com/in/ahmedmasud" target="_blank" rel="noopener noreferrer">linkedin.com/in/ahmedmasud</a>
+    </div>
+  </div>
+</header>
+
+<main id="main-content">
+  <div class="app-landing">
+    <h2>DocuPet</h2>
+    <p class="resume-title" style="margin-bottom:0.3rem;">Software Engineering Manager, E-Commerce</p>
+    <p class="app-meta">
+      Applied: 2026-06-16
+       · Source: LinkedIn
+       · Status: 📤 Applied
+    </p>
+
+    <div class="app-links">
+      <a href="resume.html" class="app-link">Resume →</a>
+      <a href="cover-letter.html" class="app-link secondary">Cover Letter →</a>
+      <a href="../../resume.html" class="app-link secondary">Master Resume →</a>
+    </div>
+  </div>
+</main>
+
+<footer role="contentinfo" class="resume-footer">
+  <p>Ahmed Masud · <a href="mailto:ahmed.masud@linux.com">ahmed.masud@linux.com</a></p>
+  <p>Application ID: DOCUPET_2026-06-16</p>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var announce = document.getElementById("theme-announce");
+  var themeNames = { moody:"Moody", dark:"Dark", light:"Light", access:"High Contrast accessibility" };
+  function setTheme(theme) {
+    root.setAttribute("data-theme", theme);
+    document.querySelectorAll(".theme-btn").forEach(function (btn) {
+      btn.setAttribute("aria-pressed", btn.dataset.themeName === theme ? "true" : "false");
+    });
+    if (announce) {
+      announce.textContent = themeNames[theme] + " theme applied";
+      setTimeout(function () { announce.textContent = ""; }, 2000);
+    }
+    try { localStorage.setItem("am-theme", theme); } catch (e) {}
+  }
+  document.querySelectorAll(".theme-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () { setTheme(btn.dataset.themeName); });
+  });
+  try {
+    var saved = localStorage.getItem("am-theme");
+    if (saved && themeNames[saved]) { setTheme(saved); return; }
+  } catch (e) {}
+  try {
+    if (window.matchMedia("(prefers-color-scheme: light)").matches) { setTheme("light"); }
+  } catch (e) {}
+}());
+</script>
+</body>
+</html>
