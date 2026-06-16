@@ -56,6 +56,66 @@ python3 -m http.server 4000
 # then visit http://localhost:4000
 ```
 
+## Resume Builder
+
+Tailored resumes and cover letters are generated from a single source of truth using the builder in `resume-src/`.
+
+### Setup (first time)
+
+```bash
+pip3 install --break-system-packages jinja2 pyyaml markdown python-frontmatter click rich
+```
+
+### New application
+
+```bash
+make new COMPANY="Acme" ROLE="Engineering Manager" SOURCE=LinkedIn URL="https://..."
+# → creates resume-src/jobs/ACME_2026-06-17.md
+
+# Edit the job file:
+#   - YAML frontmatter: adjust experience_order, skills_override, summary_override, sections
+#   - ## Job Description: paste the raw JD for reference
+#   - ## Cover Letter: write the CL body in plain markdown paragraphs
+
+make render JOB=ACME_2026-06-17
+# → generates resume/ACME_2026-06-17/{index,resume,cover-letter}.html
+# → updates applications.md
+```
+
+### Other commands
+
+```bash
+make render-all          # re-render every job file
+make list                # table of all applications + status
+make status JOB=ACME_2026-06-17 STATUS=interview   # update status
+make export              # write applications.csv for Numbers/Excel
+```
+
+### Source layout
+
+```
+resume-src/
+├── master/resume.md          # canonical resume data — edit here
+├── jobs/COMPANY_YYYY-MM-DD.md  # one file per application
+├── templates/                # Jinja2 HTML templates
+└── tokens.yml                # :token: shortcodes (:shield: :applied: etc.)
+applications.md               # auto-updated tracker (committed)
+```
+
+### Token shortcodes
+
+Use `:token:` anywhere in markdown fields. Defined in `tokens.yml`:
+
+| Token | Output |
+|-------|--------|
+| `:shield:` | 🛡 |
+| `:patent:` | ⎄ |
+| `:award:` | ★ |
+| `:applied:` | 📤 Applied |
+| `:interview:` | 🎤 Interview |
+| `:offer:` | 🎉 Offer |
+| `:rejected:` | ✗ Rejected |
+
 ## License
 
 Content © 2026 Ahmed Masud. All rights reserved.
