@@ -9,6 +9,52 @@
   <link rel="stylesheet" href="public/css/fonts.css">
   <link rel="stylesheet" href="public/css/resume.css">
   <link rel="icon" type="image/x-icon" href="public/favicon.ico">
+  <style>
+    /* ── Term tooltips ───────────────────────────────────────────── */
+    .term {
+      cursor: help;
+      text-decoration: underline dotted;
+      text-decoration-color: var(--mid, #888);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.15s;
+    }
+    .term:hover, .term.pinned {
+      text-decoration-color: var(--accent, #4a90d9);
+    }
+    #term-tooltip {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      max-width: 300px;
+      background: var(--bg2, #f5f5f5);
+      border: 1px solid var(--accent, #0047ab);
+      border-radius: 3px;
+      padding: 0.55rem 0.75rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      pointer-events: none;
+    }
+    #term-tooltip b {
+      display: block;
+      font-family: var(--mono, monospace);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--accent, #0047ab);
+      margin-bottom: 0.3rem;
+    }
+    #term-tooltip p {
+      font-family: var(--sans, sans-serif);
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--mid, #444);
+      margin: 0;
+    }
+    #term-tooltip.visible { display: block; }
+    @media print {
+      .term { text-decoration: none; }
+      #term-tooltip { display: none !important; }
+    }
+  </style>
 </head>
 <body>
 
@@ -192,11 +238,11 @@
     <div class="skills-grid">
       <div class="skill-row">
         <dt>Architecture</dt>
-        <dd>Enterprise Architecture (TOGAF/SABSA) · Solution Architecture · DND EA Standards · Conceptual / Logical / Physical Design · Reference Architectures · NIST 800-53 (all 16 control families)</dd>
+        <dd>Enterprise Architecture (<span class="term" data-def="The Open Group Architecture Framework — structured methodology for aligning IT strategy with business goals across an enterprise.">TOGAF</span>/<span class="term" data-def="Sherwood Applied Business Security Architecture — risk-driven security architecture framework designed to layer over TOGAF.">SABSA</span>) · Solution Architecture · DND EA Standards · Conceptual / Logical / Physical Design · Reference Architectures · <span class="term" data-def="NIST Special Publication 800-53 — US federal security control catalogue covering 20 control families (access control, audit, incident response, etc.) for government systems at Moderate and High impact levels.">NIST 800-53</span> (all 16 control families)</dd>
       </div>
       <div class="skill-row">
         <dt>Security</dt>
-        <dd>Zero-trust · RBAC/ABAC/MAC · OAuth2/OIDC/SAML · FedRAMP · CMMC · HIPAA · DoD IL4/IL5 · SSL/TLS · PKI · Ransomware defense · Incident response</dd>
+        <dd>Zero-trust · RBAC/ABAC/MAC · <span class="term" data-def="Identity federation protocols. OAuth2: delegated authorisation without sharing credentials. OIDC: authentication layer on top of OAuth2. SAML: XML-based enterprise single sign-on — the older standard still dominant in large enterprise SSO.">OAuth2/OIDC/SAML</span> · <span class="term" data-def="Federal Risk and Authorization Management Program — US government cloud security authorisation standard. Required for any cloud service handling federal data.">FedRAMP</span> · <span class="term" data-def="Cybersecurity Maturity Model Certification — US DoD contractor supply chain security standard. Levels 1–3 map to increasing practice requirements for handling controlled unclassified information (CUI).">CMMC</span> · HIPAA · DoD IL4/IL5 · SSL/TLS · <span class="term" data-def="Public Key Infrastructure — the full system for issuing, distributing, revoking, and managing X.509 digital certificates and asymmetric (RSA/ECC) encryption keys. Underpins HTTPS, code signing, and S/MIME.">PKI</span> · Ransomware defense · Incident response</dd>
       </div>
       <div class="skill-row">
         <dt>Languages</dt>
@@ -204,7 +250,7 @@
       </div>
       <div class="skill-row">
         <dt>Cloud &amp; Infra</dt>
-        <dd>Azure · AWS · Kubernetes/AKS · CSI drivers · Docker · Linux/Unix · High-availability systems</dd>
+        <dd>Azure · AWS · Kubernetes/AKS · <span class="term" data-def="Container Storage Interface — Kubernetes plugin standard that lets storage vendors provide drivers for attaching and managing volumes in containerised workloads without modifying core Kubernetes code.">CSI drivers</span> · Docker · Linux/Unix · High-availability systems</dd>
       </div>
       <div class="skill-row">
         <dt>Integration</dt>
@@ -212,15 +258,15 @@
       </div>
       <div class="skill-row">
         <dt>Graph &amp; AI</dt>
-        <dd>Neo4j (Trustifier + Resiliate, ~2 yrs) · Graph databases · Multigraphs · GraphRAG pipelines · Abstract algebra foundations of graph models · LangChain / LangGraph · Vector databases · Embeddings · LLM integration · Agentic workflows · Neural network architectures · Databricks · GitHub Copilot</dd>
+        <dd><span class="term" data-def="Leading property-graph database using the Cypher query language. Stores data as nodes and directed edges with typed properties. Used in Trustifier for identity relationship graphs and in Resiliate for policy dependency tracking (~2 years production use).">Neo4j</span> (Trustifier + Resiliate, ~2 yrs) · Graph databases · <span class="term" data-def="Graphs that allow multiple distinct edges between the same pair of nodes — e.g. a user node that has both an 'owns' and a 'manages' edge to the same resource node. Natively supported in Neo4j and most graph databases.">Multigraphs</span> · <span class="term" data-def="Retrieval-Augmented Generation over a knowledge graph rather than a flat vector index. Enables multi-hop reasoning across named entity relationships (e.g. A→B→C chains), outperforming pure vector search for structured, relational queries.">GraphRAG pipelines</span> · Abstract algebra foundations of graph models · <span class="term" data-def="Python frameworks for composing LLM-powered applications. LangChain provides tool-use, retrieval chains, and prompt management. LangGraph extends it with stateful, multi-agent workflows modelled as directed graphs — enabling agents that plan, act, observe, and iterate.">LangChain / LangGraph</span> · <span class="term" data-def="Databases optimised for storing and querying high-dimensional embedding vectors, enabling semantic similarity search at scale. Examples: Pinecone, Weaviate, Qdrant, pgvector. Different from graph databases, which store relationships between entities.">Vector databases</span> · <span class="term" data-def="Dense numerical vector representations of text, images, or other data produced by neural encoder models (e.g. OpenAI Ada-002, sentence-transformers). Semantically similar inputs land close together in vector space, enabling search by meaning. Entirely distinct from 'embedded computing' — see the Embedded row below.">Embeddings</span> · LLM integration · <span class="term" data-def="AI architectures where an LLM autonomously decomposes a goal into steps, calls external tools (APIs, databases, code), observes results, and iterates — rather than producing a single response. The basis of AI agents and copilots.">Agentic workflows</span> · Neural network architectures · <span class="term" data-def="Unified analytics platform built on Apache Spark. Supports large-scale data engineering pipelines, ML training and experiment tracking, and LLM fine-tuning workflows.">Databricks</span> · GitHub Copilot</dd>
       </div>
       <div class="skill-row">
         <dt>Data</dt>
         <dd>Oracle 7–12c · PostgreSQL · Oracle↔MSSQL sync · Prometheus · Grafana · Splunk</dd>
       </div>
       <div class="skill-row">
-        <dt>Embedded</dt>
-        <dd>FreeRTOS · Cortex-M · TI DSP · UART/SPI/I2C · Hardware OTP encryption · Kernel-level Unix/Linux security</dd>
+        <dt><span class="term" data-def="Bare-metal and real-time OS (RTOS) programming for microcontrollers, DSPs, and purpose-built hardware — writing code that runs directly on the processor without a general-purpose OS. Entirely distinct from AI 'embeddings' (dense vector representations used in machine learning) — see Graph &amp; AI row above.">Embedded</span></dt>
+        <dd><span class="term" data-def="Open-source real-time operating system kernel for microcontrollers. Provides task scheduling, inter-task communication, and timing guarantees in resource-constrained hardware. Used in UAV signal processing systems for Allied Forces/NATO.">FreeRTOS</span> · <span class="term" data-def="ARM processor core family designed for microcontrollers — low-power, hard real-time capable, widely used from consumer IoT to defence hardware. The Cortex-M4 and M7 variants add hardware floating-point for DSP workloads.">Cortex-M</span> · TI DSP · UART/SPI/I2C · Hardware OTP encryption · Kernel-level Unix/Linux security</dd>
       </div>
     </div>
   </section>
@@ -298,6 +344,61 @@
   <p>Ahmed Masud · Ottawa, ON · <a href="mailto:ahmed.masud@linux.com">ahmed.masud@linux.com</a></p>
   <p><a href="/">ahmed-masud.github.io</a> · Last updated: June 2026</p>
 </footer>
+
+<div id="term-tooltip" role="tooltip" aria-live="polite"></div>
+
+<script>
+(function () {
+  var tip     = document.getElementById('term-tooltip');
+  var pinned  = null;
+
+  function render(el) {
+    tip.innerHTML = '<b>' + el.textContent.trim() + '</b><p>' + el.dataset.def + '</p>';
+  }
+  function place(x, y) {
+    var w = tip.offsetWidth, h = tip.offsetHeight;
+    var left = x + 16, top = y + 16;
+    if (left + w > window.innerWidth  - 8) left = x - w - 8;
+    if (top  + h > window.innerHeight - 8) top  = y - h - 8;
+    tip.style.left = left + 'px';
+    tip.style.top  = top  + 'px';
+  }
+  function show(el, x, y) { render(el); tip.classList.add('visible'); place(x, y); }
+  function hide()          { tip.classList.remove('visible'); }
+
+  document.querySelectorAll('.term').forEach(function (el) {
+    el.addEventListener('mouseenter', function (e) {
+      if (pinned !== el) show(el, e.clientX, e.clientY);
+    });
+    el.addEventListener('mousemove', function (e) {
+      if (pinned !== el) place(e.clientX, e.clientY);
+    });
+    el.addEventListener('mouseleave', function () {
+      if (pinned !== el) hide();
+    });
+    el.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (pinned === el) {
+        pinned = null; el.classList.remove('pinned'); hide();
+      } else {
+        if (pinned) pinned.classList.remove('pinned');
+        pinned = el; el.classList.add('pinned');
+        show(el, e.clientX, e.clientY);
+      }
+    });
+  });
+
+  document.addEventListener('click', function () {
+    if (pinned) { pinned.classList.remove('pinned'); pinned = null; }
+    hide();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && pinned) {
+      pinned.classList.remove('pinned'); pinned = null; hide();
+    }
+  });
+}());
+</script>
 
 <script>
 (function () {
