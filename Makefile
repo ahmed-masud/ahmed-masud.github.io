@@ -7,7 +7,9 @@ help:
 	@echo "Resume builder commands:"
 	@echo ""
 	@echo "  make new    COMPANY=Acme ROLE='Engineering Manager' [DATE=2026-06-16] [SOURCE=LinkedIn] [URL=https://...]"
-	@echo "  make tailor COMPANY=Acme ROLE='Engineering Manager' JD=path/to/jd.txt [MODEL=llama3.2] [DATE=...] [RENDER=1]"
+	@echo "  make tailor COMPANY=Acme ROLE='Engineering Manager' JD=path/to/jd.txt [MODEL=mistral] [DATE=...] [RENDER=1]"
+	@echo "              [HOST=http://remote:11434] [APIKEY=secret]"
+	@echo "  # or set env vars: OLLAMA_HOST=http://remote:11434 OLLAMA_API_KEY=secret"
 	@echo "  make render JOB=ACME_2026-06-16"
 	@echo "  make render-all"
 	@echo "  make list"
@@ -33,8 +35,10 @@ tailor:
 	  --company "$(COMPANY)" \
 	  --role    "$(ROLE)" \
 	  --jd      "$(JD)" \
-	  $(if $(MODEL),  --model "$(MODEL)") \
-	  $(if $(DATE),   --date  "$(DATE)") \
+	  $(if $(MODEL),  --model   "$(MODEL)") \
+	  $(if $(DATE),   --date    "$(DATE)") \
+	  $(if $(HOST),   --host    "$(HOST)") \
+	  $(if $(APIKEY), --api-key "$(APIKEY)") \
 	  $(if $(RENDER), --render)
 
 render:

@@ -48,11 +48,15 @@ These pages load both `style.css` (for the theme switcher UI) and `resume.css` (
 `build.py tailor` uses a local Ollama model to auto-generate a tailored resume + cover letter from a job description file. Requires Ollama running locally with `mistral` or `llama3.2` (minimum 7B model — `tinyllama` is too small for structured JSON output).
 
 ```bash
-# Pull a capable model first (one-time)
+# Pull a capable model first (one-time, local)
 ollama pull mistral
 
-# Generate tailored application
+# Local Ollama
 make tailor COMPANY="Acme" ROLE="VP Engineering" JD=path/to/jd.txt
+
+# Remote Ollama (flag or env var)
+make tailor COMPANY="Acme" ROLE="VP Eng" JD=jd.txt HOST=http://gpu-box:11434
+OLLAMA_HOST=http://gpu-box:11434 OLLAMA_API_KEY=secret make tailor ...
 
 # Review/edit the generated job file, then render
 make render JOB=ACME_2026-06-16

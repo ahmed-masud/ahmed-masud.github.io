@@ -14,6 +14,7 @@ Usage:
 
 import csv
 import json
+import os
 import re
 import sys
 from datetime import date as date_type, datetime
@@ -363,17 +364,23 @@ def export():
 
 # ── LLM tailoring ────────────────────────────────────────────────────────────
 
-def _ollama_chat(messages: list[dict], model: str, host: str) -> str:
+def _auth_headers(api_key: str) -> dict:
+    """Build auth headers if an API key is provided."""
+    return {"Authorization": f"Bearer {api_key}"} if api_key else {}
+
+
+def _ollama_chat(messages: list[dict], model: str, host: str, api_key: str = "") -> str:
     """Call Ollama chat API; return content string."""
     import requests as req
     r = req.post(
         f"{host}/api/chat",
+        headers=_auth_headers(api_key),
         json={
-            "model":   model,
+            "model":    model,
             "messages": messages,
-            "format":  "json",
-            "stream":  False,
-            "options": {"temperature": 0.25, "num_ctx": 16384},
+            "format":   "json",
+            "stream":   False,
+            "options":  {"temperature": 0.25, "num_ctx": 16384},
         },
         timeout=600,
     )
@@ -381,24 +388,26 @@ def _ollama_chat(messages: list[dict], model: str, host: str) -> str:
     return r.json()["message"]["content"]
 
 
-def _check_ollama(host: str, model: str) -> None:
+def _check_ollama(host: str, model: str, api_key: str = "") -> None:
     """Raise ClickException if Ollama is unreachable or model is missing."""
     import requests as req
     try:
-        r = req.get(f"{host}/api/tags", timeout=5)
+        r = req.get(f"{host}/api/tags", headers=_auth_headers(api_key), timeout=10)
         r.raise_for_status()
         available = [m["name"].split(":")[0] for m in r.json().get("models", [])]
     except Exception as exc:
+        hint = (
+            "  Start with: ollama serve\n  Install:    https://ollama.ai"
+            if "localhost" in host
+            else f"  Check that the remote host is reachable and OLLAMA_API_KEY is correct."
+        )
         raise click.ClickException(
-            f"Cannot reach Ollama at {host}.\n"
-            f"  Start with: ollama serve\n"
-            f"  Install:    https://ollama.ai\n"
-            f"  Error: {exc}"
+            f"Cannot reach Ollama at {host}.\n{hint}\n  Error: {exc}"
         )
     base = model.split(":")[0]
     if base not in available:
         raise click.ClickException(
-            f"Model '{model}' not found in Ollama.\n"
+            f"Model '{model}' not found in Ollama at {host}.\n"
             f"  Available: {', '.join(available) or 'none'}\n"
             f"  Pull with: ollama pull {model}"
         )
@@ -575,13 +584,17 @@ def _write_job_file(data: dict, company: str, role: str, date_str: str,
               help="Path to job description file (.txt or .md)")
 @click.option("--date",    "date_str", default=None, help="YYYY-MM-DD (default: today)")
 @click.option("--model",   default="mistral", show_default=True,
-              help="Ollama model to use (mistral or llama3.2 recommended; tinyllama too small)")
-@click.option("--host",    default="http://localhost:11434", show_default=True,
-              help="Ollama API host")
+              help="Ollama model (mistral or llama3.2 recommended; tinyllama too small)")
+@click.option("--host",
+              default=lambda: os.environ.get("OLLAMA_HOST", "http://localhost:11434"),
+              help="Ollama API host [env: OLLAMA_HOST, default: http://localhost:11434]")
+@click.option("--api-key", "api_key",
+              default=lambda: os.environ.get("OLLAMA_API_KEY", ""),
+              help="Bearer token for authenticated remote hosts [env: OLLAMA_API_KEY]")
 @click.option("--render",  is_flag=True, default=False,
               help="Auto-render HTML after generating the job file")
 def tailor(company: str, role: str, jd_path: str, date_str: str | None,
-           model: str, host: str, render: bool):
+           model: str, host: str, api_key: str, render: bool):
     """Use a local LLM (Ollama) to generate a tailored resume and cover letter.
 
     Reads the master resume and a job description file, sends both to the
@@ -601,18 +614,19 @@ def tailor(company: str, role: str, jd_path: str, date_str: str | None,
             f"  Delete it first, or pass --date with a different date."
         )
 
-    _check_ollama(host, model)
+    _check_ollama(host, model, api_key)
 
     master  = load_master()
     jd_text = Path(jd_path).read_text(encoding="utf-8")
 
-    console.print(f"[dim]Model:[/] {model}  [dim]JD:[/] {jd_path}")
+    remote  = "" if "localhost" in host or "127.0.0.1" in host else f"  [dim]({host})[/]"
+    console.print(f"[dim]Model:[/] {model}{remote}  [dim]JD:[/] {jd_path}")
     console.print("[cyan]Calling LLM — this takes 30–120 s depending on model size…[/]")
 
     messages = _build_messages(master, jd_text, company, role)
 
     with console.status("[cyan]Thinking…[/]"):
-        raw = _ollama_chat(messages, model, host)
+        raw = _ollama_chat(messages, model, host, api_key)
 
     data = _parse_llm_json(raw)
     if not data:
